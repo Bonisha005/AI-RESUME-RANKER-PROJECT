@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Ranking Results</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 AI Resume Ranking Dashboard</h1>
+
+            <p>
+                Candidate ranking based on
+                TF-IDF similarity and skill matching
+            </p>
+        </div>
+
+
+        {% if results %}
+
+        <!-- Top Candidate -->
+        <div class="card top-candidate">
+
+            <h2>🏆 Top Ranked Candidate</h2>
+
+            <h3>
+                {{ results[0]["candidate"] }}
+            </h3>
+
+            <div class="score-grid">
+
+                <div class="score-box">
+                    <h3>
+                        {{ results[0]["final_score"] }}%
+                    </h3>
+
+                    <p>Final Score</p>
+                </div>
+
+
+                <div class="score-box">
+                    <h3>
+                        {{ results[0]["similarity_score"] }}%
+                    </h3>
+
+                    <p>TF-IDF Similarity</p>
+                </div>
+
+
+                <div class="score-box">
+                    <h3>
+                        {{ results[0]["skill_score"] }}%
+                    </h3>
+
+                    <p>Skill Match</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Candidate Rankings -->
+        <div class="card">
+
+            <h2>Candidate Rankings</h2>
+
+            <table class="results-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Rank</th>
+                        <th>Candidate</th>
+                        <th>TF-IDF</th>
+                        <th>Skill Match</th>
+                        <th>Final Score</th>
+                        <th>Matched Skills</th>
+                        <th>Missing Skills</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for result in results %}
+
+                    <tr>
+
+                        <!-- Rank -->
+                        <td>
+                            <strong>
+                                #{{ result["rank"] }}
+                            </strong>
+                        </td>
+
+
+                        <!-- Candidate -->
+                        <td>
+                            {{ result["candidate"] }}
+                        </td>
+
+
+                        <!-- TF-IDF -->
+                        <td>
+
+                            <div class="score">
+                                {{ result["similarity_score"] }}%
+                            </div>
+
+                            <div class="progress-container">
+
+                                <div
+                                    class="progress-bar"
+                                    data-score="{{ result['similarity_score'] }}">
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Skill Score -->
+                        <td>
+
+                            <div class="score">
+                                {{ result["skill_score"] }}%
+                            </div>
+
+                            <div class="progress-container">
+
+                                <div
+                                    class="progress-bar"
+                                    data-score="{{ result['skill_score'] }}">
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Final Score -->
+                        <td>
+
+                            <strong>
+                                {{ result["final_score"] }}%
+                            </strong>
+
+                        </td>
+
+
+                        <!-- Matched Skills -->
+                        <td>
+
+                            {% if result["matched_skills"] %}
+
+                                {% for skill in result["matched_skills"] %}
+
+                                <span class="skill">
+                                    {{ skill }}
+                                </span>
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <span>None</span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Missing Skills -->
+                        <td>
+
+                            {% if result["missing_skills"] %}
+
+                                {% for skill in result["missing_skills"] %}
+
+                                <span class="skill missing">
+                                    {{ skill }}
+                                </span>
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <span>None</span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Actions -->
+        <div class="actions">
+
+            <a
+                href="{{ url_for('download_report') }}"
+                class="btn">
+                📥 Download CSV Report
+            </a>
+
+
+            <a
+                href="{{ url_for('index') }}"
+                class="btn">
+                🔄 Rank More Resumes
+            </a>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="card">
+
+            <h2>No Results Found</h2>
+
+            <p>
+                No resume ranking results are available.
+            </p>
+
+            <br>
+
+            <a
+                href="{{ url_for('index') }}"
+                class="btn">
+                Go Back
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script
+        src="{{ url_for('static', filename='js/script.js') }}">
+    </script>
+
+</body>
+
+</html>

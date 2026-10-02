@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Resume Ranker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🤖 AI Resume Ranker</h1>
+
+            <p>
+                Intelligent resume screening using
+                NLP, TF-IDF and skill matching
+            </p>
+        </div>
+
+
+        <!-- Error Message -->
+        {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+        {% endif %}
+
+
+        <!-- Ranking Form -->
+        <div class="card">
+
+            <form id="rank-form"
+                  action="/rank"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+                <!-- Job Description -->
+                <label for="job_description">
+                    Job Description
+                </label>
+
+                <textarea
+                    id="job_description"
+                    name="job_description"
+                    placeholder="Paste the job description here..."
+                    required></textarea>
+
+
+                <!-- Resume Upload -->
+                <label for="resumes">
+                    Upload Resumes
+                </label>
+
+                <input
+                    type="file"
+                    id="resumes"
+                    name="resumes"
+                    accept=".pdf"
+                    multiple
+                    required>
+
+                <p id="file-count">
+                    No resumes selected
+                </p>
+
+
+                <!-- Submit -->
+                <button type="submit">
+                    🚀 Rank Resumes
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Features -->
+        <div class="features">
+
+            <div class="card feature">
+                <h3>📄 PDF Extraction</h3>
+
+                <p>
+                    Extracts text automatically
+                    from uploaded PDF resumes.
+                </p>
+            </div>
+
+
+            <div class="card feature">
+                <h3>🧠 NLP Analysis</h3>
+
+                <p>
+                    Processes resume and job
+                    description text using NLP.
+                </p>
+            </div>
+
+
+            <div class="card feature">
+                <h3>📊 Smart Ranking</h3>
+
+                <p>
+                    Combines TF-IDF similarity
+                    and skill matching.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

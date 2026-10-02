@@ -1,0 +1,8 @@
+Flask
+pypdf
+pandas
+numpy
+scikit-learn
+nltk
+spacy
+openpyxl

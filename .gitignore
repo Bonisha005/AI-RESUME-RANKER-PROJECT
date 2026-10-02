@@ -1,0 +1,30 @@
+# Virtual environment
+venv/
+venv310/
+.env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Uploaded resumes
+uploads/*
+!uploads/.gitkeep
+
+# Generated reports
+reports/*
+!reports/.gitkeep
+
+# NLTK data
+nltk_data/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
